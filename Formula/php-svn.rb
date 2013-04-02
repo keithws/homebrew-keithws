@@ -3,19 +3,19 @@ require 'formula'
 class PhpSvn < Formula
   homepage 'http://pecl.php.net/package/svn'
   url 'http://pecl.php.net/get/svn-1.0.2.tgz'
-  md5 '45407d43f1055eb72e149d1862f3daa1'
-  version '1.0.2'
+  sha1 '32c3da0844f04921482225d01e8eaf7acfcf0e94'
   head 'http://pecl.php.net/get/svn'
 
-  depends_on 'autoconf'
+  depends_on 'autoconf' => :build
   depends_on 'subversion'
+  depends_on 'php'
 
   def modules
     prefix+'lib/php/modules'
   end
 
   def install
-    if not ARGV.build_head?
+    if not build.head?
       Dir.chdir "svn-#{version}"
     end
 

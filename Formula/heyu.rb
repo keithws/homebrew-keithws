@@ -18,30 +18,29 @@ class Heyu < Formula
     # stop the current running deamons
     # TODO only if heyu command available and running
     # system "heyu stop"
-    
+
     system "sh ./Configure"
-    
+
     system "make install"
-    
+
     # manually do what the install.sh was trying todo
     # install a sample config files unless the config files already exist
     etc.install "x10config.sample" => "heyu/x10.conf" unless File.exists? etc+"heyu/x10.conf"
     etc.install "x10.sched.sample" => "heyu/x10.sched" unless File.exists? etc+"heyu/x10.sched"
-    
+
     # create spool and lock directories with the correct permissions
     # when necessary
     spool = "/usr/local/var/tmp/heyu"
     lock = "/usr/local/var/spool/lock"
     Dir.mkdir(spool, 777) unless File.exists? spool
     Dir.mkdir(lock, 1777) unless File.exists? lock
-    
   end
 
   def caveats;  <<-EOS.undent
-    
+
     Note: If you're upgrading from a previous version of Heyu, run 'heyu stop'
     under that version before proceeding.
-        
+
     EOS
   end
 
@@ -55,7 +54,7 @@ index fc3204a..c824dc6 100755
 --- a/Configure
 +++ b/Configure
 @@ -31,9 +31,9 @@ EoF
- 
+
  # paths:
  cat >> Makefile <<EoF
 -BIN = /usr/local/bin
@@ -64,7 +63,7 @@ index fc3204a..c824dc6 100755
 +BIN = HOMEBREW_PREFIX/bin
 +MAN = HOMEBREW_PREFIX/share/man/man1
 +MAN5 = HOMEBREW_PREFIX/share/man/man5
- 
+
  #       set DFLAGS equal to:
  #          -DSYSV       if using SYSTEM V
 @@ -250,9 +250,9 @@ EoF
@@ -90,14 +89,14 @@ index 84ea379..227b65b 100644
  	@echo ""
 -	@echo "** Now become root and run 'make install' **"
 -	@echo ""
- 
+
  $(OBJS): x10.h process.h sun.h Makefile
- 
+
 @@ -93,7 +91,6 @@ $(BIN)/heyu:	heyu
  	chgrp $(GROUP) $(BIN)/heyu
  	chmod 755 $(BIN)/heyu
  	chown $(OWNER) $(BIN)/heyu
 -	./install.sh
- 
+
  $(MAN)/heyu.1: heyu.1
  	mkdir -p -m 755 $(MAN)

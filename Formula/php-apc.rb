@@ -3,14 +3,14 @@ require 'formula'
 class PhpApc < Formula
   homepage 'http://pecl.php.net/package/apc'
   url 'http://pecl.php.net/get/APC-3.1.9.tgz'
-  md5 'a2cf7fbf6f3a87f190d897a53260ddaa'
-  version '3.1.9'
+  sha1 '417b95e63496de7f785b4917166098c6ac996008'
   head 'http://pecl.php.net/get/APC'
 
-  # depends_on 'autoconf'
+  depends_on 'autoconf' => :build
+  depends_on 'php'
 
   def install
-    if not ARGV.build_head?
+    if not build.head?
       Dir.chdir "APC-#{version}"
     end
 
