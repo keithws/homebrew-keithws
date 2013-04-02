@@ -3,7 +3,7 @@ require 'formula'
 class CupsPdf < Formula
   url 'http://www.cups-pdf.de/src/cups-pdf_3.0beta1.tar.gz'
   version '3.0beta1'
-  md5 'b5079bc5d86729b0b31d93a77b4a896f'
+  sha1 'ab44fff6b375b56b6730f78e88d02c267ec4b3ba'
   homepage 'http://www.cups-pdf.de/'
 
   # Patch derived from MacPorts.
