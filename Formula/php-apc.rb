@@ -2,8 +2,8 @@ require 'formula'
 
 class PhpApc < Formula
   homepage 'http://pecl.php.net/package/apc'
-  url 'http://pecl.php.net/get/APC-3.1.9.tgz'
-  sha1 '417b95e63496de7f785b4917166098c6ac996008'
+  url 'http://pecl.php.net/get/APC-3.1.13.tgz'
+  sha1 'cafd6ba92ac1c9f500a6c1e300bbe8819daddfae'
   head 'http://pecl.php.net/get/APC'
 
   depends_on 'autoconf' => :build

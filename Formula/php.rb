@@ -1,9 +1,9 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.4.13.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.4.16.tar.bz2'
   homepage 'http://php.net/'
-  sha1 '5c229046b5f1d5c1dcd8df6e9cb388aa11504236'
+  sha1 '7e70ba419778a54f5ff9d7de8d6190ca82de3786'
 
   depends_on 'gettext'
   depends_on 'jpeg'
