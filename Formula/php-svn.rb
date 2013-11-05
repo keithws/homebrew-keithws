@@ -7,7 +7,7 @@ class PhpSvn < Formula
   head 'http://pecl.php.net/get/svn'
 
   depends_on 'autoconf' => :build
-  depends_on 'subversion'
+  depends_on 'subversion17'
   depends_on 'php'
 
   def modules

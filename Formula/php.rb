@@ -1,9 +1,9 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.4.16.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.5.5.tar.bz2'
   homepage 'http://php.net/'
-  sha1 '7e70ba419778a54f5ff9d7de8d6190ca82de3786'
+  md5 '186c330c272d6322d254db9b2d18482a'
 
   depends_on 'gettext'
   depends_on 'jpeg'
@@ -98,8 +98,7 @@ class Php < Formula
       #{etc}/php.ini
 
     You'll also need to reinstall packages built against php like:
-      brew uninstall php-apc php-svn
-      brew install php-apc php-svn
+      brew uninstall php-svn && brew install php-svn
     EOS
   end
 
