@@ -1,13 +1,15 @@
 require 'formula'
 
-# Documentation: https://github.com/mxcl/homebrew/wiki/Formula-Cookbook
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
-
 class Heyu < Formula
   homepage 'http://www.heyu.org/'
   url 'http://www.heyu.org/download/heyu-2.10.tar.gz'
   sha1 'fa5993d07b68e90890487819e5e52e0adc3891cd'
-
+  
+  devel do
+    url 'http://www.heyu.org/download/heyu-2.11-rc1.tar.gz'
+    sha1 'f02fa53b866343f05d57a2ac87c7f7b39c786295'
+  end
+  
   # patch the configure script to respect the homebrew prefix
   # and to put the man files under the share directory
   # and install files as the current user (instead of as root)
@@ -21,7 +23,9 @@ class Heyu < Formula
 
     system "sh ./Configure"
 
-    system "make install"
+    system "make"
+    
+    bin.install "heyu"
 
     # manually do what the install.sh was trying todo
     # install a sample config files unless the config files already exist
@@ -32,8 +36,8 @@ class Heyu < Formula
     # when necessary
     spool = "/usr/local/var/tmp/heyu"
     lock = "/usr/local/var/spool/lock"
-    Dir.mkdir(spool, 777) unless File.exists? spool
-    Dir.mkdir(lock, 1777) unless File.exists? lock
+    FileUtils.mkdir_p(spool, :mode => 777) unless File.exists? spool
+    FileUtils.mkdir_p(lock, :mode => 1777) unless File.exists? lock
   end
 
   def caveats;  <<-EOS.undent
