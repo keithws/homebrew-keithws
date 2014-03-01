@@ -25,6 +25,7 @@ class Zfs < Formula
     end
     
     inreplace "cmd/mount_zfs/Makefile.am", "/sbin", "#{prefix}/sbin"
+    inreplace "config/user-systemd.m4", "/usr/lib", "#{prefix}/lib"
   end
 
   def install
