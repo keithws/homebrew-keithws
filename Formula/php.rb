@@ -1,9 +1,9 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.5.11.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.5.13.tar.bz2'
   homepage 'http://php.net/'
-  md5 'c8c9ad960bae0265054b5879423f7a75'
+  md5 'e26e90af25ee6505dc18855e0180ffe9'
 
   depends_on 'gettext'
   depends_on 'jpeg'
@@ -60,7 +60,7 @@ class Php < Formula
     # Use libedit instead of readline for php 5.4 (recommend by Jose Gonzalez)
     args << "--with-libedit"
 
-    # options of unknown orgin (not on corpweb)
+    # options of unknown origin (not on corpsite)
     # args << "--enable-bcmath"
     # args << "--with-bz2"
     # args << "--enable-calendar"
@@ -75,7 +75,7 @@ class Php < Formula
     # args << "--with-xsl"
     # args << "--enable-zip"
 
-    # options of unknown orgin (that match corpweb)
+    # options of unknown origin (that match corpsite)
     # args << "--with-libxml-dir"
     # args << "--with-kerberos"
     # args << "--with-iconv"
