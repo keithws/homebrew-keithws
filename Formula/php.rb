@@ -1,21 +1,17 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.5.13.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.6.16.tar.bz2'
   homepage 'http://php.net/'
-  md5 'e26e90af25ee6505dc18855e0180ffe9'
+  sha256 '4fe6f40964c1bfaba05fc144ba20a2cdad33e11685f4f101ea5a48b98bbcd2ae'
 
-  depends_on 'gettext'
-  depends_on 'jpeg'
-  depends_on 'libxml2' unless MacOS.version >= :mountain_lion
-  depends_on 'mcrypt'
-
-  # required to find freetype
-  depends_on :x11
+  depends_on 'postgresql'
 
   def install
-    ENV.deparallelize
-    ENV.no_optimization
+    # Not removing all pear.conf and .pearrc files from PHP path results in
+    # the PHP configure not properly setting the pear binary to be installed
+    File.delete "#{etc}/pear.conf" if File.exists? "#{etc}/pear.conf"
+    File.delete "~/.pearrc" if File.exists? "~/.pearrc"
 
     args = [
       "--disable-debug",
@@ -28,81 +24,66 @@ class Php < Formula
 
     # Enable PHP FPM
     args << "--enable-fpm"
-    args << "--with-fpm-user=kshaw"
-    args << "--with-fpm-group=kshaw"
+    args << "--with-fpm-user=nobody"
+    args << "--with-fpm-group=nobody"
 
-    # options to match corpweb'
+    # additions to match PROD
+    # cURL is used to talk to other HTTP APIs like GeoLearning and DemandBase
     args << "--with-curl"
-    args << "--with-gd"
-    args << "--with-jpeg-dir=#{Formula.factory('jpeg').prefix}" # required by gd
-    args << "--with-png-dir=/opt/X11" # required by gd
-    args << "--with-zlib" # required by png
-    args << "--with-gettext=#{Formula.factory('gettext').prefix}"
-    args << "--enable-mbstring"
-    # args << "--enable-mbregex"
-    args << "--with-openssl"
-    # args << "--enable-dba=shared --with-gdbm --with-cdb --with-cdb_make --with-inifile --with-flatfile" # not used as of 2012-05-16
-    # args << "--enable-shmop" # not used as of 2012-05-16
-    # args << "--enable-sysvsem" # not used as of 2012-05-16
-    # args << "--enable-sysvshm" # not used as of 2012-05-16
 
-    # additions for Yii
-    args << "--with-pdo-pgsql=#{Formula.factory('postgresql').prefix}"
-    args << "--with-mcrypt=#{Formula.factory('mcrypt').prefix}"
-    args << "--with-freetype-dir=/opt/X11"
-    args << "--enable-gd-native-ttf"
+    # multi byte strings are used for foreign languages
+    args << "--enable-mbstring"
+
+    # openssl is used to make secure HTTPS API calls with cURL
+    # includes StrictTransport by default in cURL
+
+    # because who doesn't want Perl compatible regular expressions
+    args << "--with-pcre-regex"
+
+    # need SOAP to talk to SOA
     args << "--enable-soap"
 
-    # additions for Quazam
-    args << "--with-ldap"
+    # compress config files into an attachment in info action
+    # (otherwise unknown)
+    args << "--with-zlib=/usr"
+
+    # additions to match PROD but with unknown use cases
+    # args << "--enable-bcmath" # unknown use case
+    # args << "--enable-calendar" # unknown use case
+    # args << "--with-mysql" # unknown use case
+    # args << "--with-mysqlnd" # deprecated
+    # args << "--enable-shmop" # unknown use case
+    # args << "--with-snmp" # unknown use case
+    # args << "--enable-sockets" # unknown use case
+    # args << "--enable-sysvmsg" # unknown use case
+    # args << "--enable-sysvsem" # unknown use case
+    # args << "--enable-sysvshm" # unknown use case
+
+    # additions to meet Quazam dependancies
+    args << "--enable-pcntl"
+    args << "--enable-zip"
+    args << "--with-config-file-scan-dir=#{etc}/php.d"
     args << "--with-ldap-sasl"
-
-    # Use libedit instead of readline for php 5.4 (recommend by Jose Gonzalez)
-    args << "--with-libedit"
-
-    # options of unknown origin (not on corpsite)
-    # args << "--enable-bcmath"
-    # args << "--with-bz2"
-    # args << "--enable-calendar"
-    # args << "--enable-exif"
-    # args << "--enable-ftp"
-    # args << "--with-iodbc"
-    # args << "--with-snmp"
-    # args << "--enable-sockets"
-    # args << "--enable-sysvmsg"
-    # args << "--enable-wddx"
-    # args << "--with-xmlrpc"
-    # args << "--with-xsl"
-    # args << "--enable-zip"
-
-    # options of unknown origin (that match corpsite)
-    # args << "--with-libxml-dir"
-    # args << "--with-kerberos"
-    # args << "--with-iconv"
-    # args << "--with-pcre-regex"
+    args << "--with-ldap=shared"
+    args << "--with-pdo-pgsql=shared,#{Formula.factory("postgresql").prefix}"
 
     # configure, make, and install
     system "./configure", *args
     system "make"
     system "make install"
 
-    etc.install "./php.ini-development" => "php.ini" unless File.exists? etc+"php.ini"
-
-    # fix the default PEAR permissions and config
-    # chmod_R 0775, lib+"php"
-    # system bin+"pear", "config-set", "php_ini", etc+"php.ini"
+    etc.install "./php.ini-development" => "php.ini" unless File.exists? etc + "php.ini"
   end
 
   def caveats; <<-EOS.undent
     The php.ini file can be found in:
       #{etc}/php.ini
 
-    You'll also need to reinstall packages built against php like:
-      brew uninstall php-svn && brew install php-svn
     EOS
   end
 
   def test
-    system "php --version | grep 'PHP #{version}'"
+    system "php -r 'echo \"Testing PHP execution on \" . date('r') . \"\\n\";'"
   end
 end
+
