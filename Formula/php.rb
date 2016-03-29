@@ -1,11 +1,13 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.6.16.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.6.19.tar.bz2'
   homepage 'http://php.net/'
-  sha256 '4fe6f40964c1bfaba05fc144ba20a2cdad33e11685f4f101ea5a48b98bbcd2ae'
+  sha256 '2a24a3f84971680ac0a4c71050067de4f76ee235aa4a041fae21bfa69975c168'
 
   depends_on 'postgresql'
+  depends_on 'openssl'
+  depends_on 'libxml2'
 
   def install
     # Not removing all pear.conf and .pearrc files from PHP path results in
@@ -36,6 +38,11 @@ class Php < Formula
 
     # openssl is used to make secure HTTPS API calls with cURL
     # includes StrictTransport by default in cURL
+    # SoapClient still needs OpenSSL
+    args << "--with-openssl=#{Formula['openssl'].opt_prefix}"
+
+    # note, openssl fails to build without libxml
+    args << "--with-libxml-dir=#{Formula['libxml2'].opt_prefix}"
 
     # because who doesn't want Perl compatible regular expressions
     args << "--with-pcre-regex"
@@ -63,9 +70,10 @@ class Php < Formula
     args << "--enable-pcntl"
     args << "--enable-zip"
     args << "--with-config-file-scan-dir=#{etc}/php.d"
-    args << "--with-ldap-sasl"
-    args << "--with-ldap=shared"
-    args << "--with-pdo-pgsql=shared,#{Formula.factory("postgresql").prefix}"
+    args << "--with-ldap"
+    args << "--with-ldap-sasl=/usr"
+    args << "--with-pgsql=#{Formula['postgresql'].opt_prefix}"
+    args << "--with-pdo-pgsql=#{Formula['postgresql'].opt_prefix}"
 
     # configure, make, and install
     system "./configure", *args
