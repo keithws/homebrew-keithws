@@ -6,8 +6,8 @@ class Heyu < Formula
   sha256 'ac8127fb412ce1bdb88e70960aba6d33617092af6579e95abde33993040d7feb'
   
   devel do
-    url 'http://www.heyu.org/download/heyu-2.11-rc1.tar.gz'
-    sha256 '97b49f0925194beb753f4549360ca12ef848c1022132b388b72009c36e1ff502'
+    url 'https://github.com/HeyuX10Automation/heyu/archive/v2.11-rc2.tar.gz'
+    sha256 '1729ae342ce01ae159d9ebb9cc8479ebc36c726678c071b610a61e4240053595'
   end
   
   # patch the configure script to respect the homebrew prefix
