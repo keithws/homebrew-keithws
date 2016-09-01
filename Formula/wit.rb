@@ -2,7 +2,7 @@ require 'formula'
 
 class Wit < Formula
   url 'http://wit.wiimm.de/download/wit-v2.24a-r4723-mac.tar.gz'
-  sha1 '57f1eb2973aa0fdd27e67b11e8dd3a1c54a38e7a'
+  sha256 'f875dce5904ebb99c6197662272d016e1fd45502a079ee5005083d339074ef3d'
   version '2.24a'
   homepage 'http://wit.wiimm.de/'
 

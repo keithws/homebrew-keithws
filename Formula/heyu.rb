@@ -3,11 +3,11 @@ require 'formula'
 class Heyu < Formula
   homepage 'http://www.heyu.org/'
   url 'http://www.heyu.org/download/heyu-2.10.tar.gz'
-  sha1 'fa5993d07b68e90890487819e5e52e0adc3891cd'
+  sha256 'ac8127fb412ce1bdb88e70960aba6d33617092af6579e95abde33993040d7feb'
   
   devel do
     url 'http://www.heyu.org/download/heyu-2.11-rc1.tar.gz'
-    sha1 'f02fa53b866343f05d57a2ac87c7f7b39c786295'
+    sha256 '97b49f0925194beb753f4549360ca12ef848c1022132b388b72009c36e1ff502'
   end
   
   # patch the configure script to respect the homebrew prefix
