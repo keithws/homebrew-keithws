@@ -1,9 +1,9 @@
 require 'formula'
 
 class Php < Formula
-  url 'http://us.php.net/distributions/php-5.6.19.tar.bz2'
+  url 'http://us.php.net/distributions/php-5.6.25.tar.bz2'
   homepage 'http://php.net/'
-  sha256 '2a24a3f84971680ac0a4c71050067de4f76ee235aa4a041fae21bfa69975c168'
+  sha256 '58ce6032aced7f3e42ced492bd9820e5b3f2a3cd3ef71429aa92fd7b3eb18dde'
 
   depends_on 'postgresql'
   depends_on 'openssl'

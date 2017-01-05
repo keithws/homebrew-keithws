@@ -3,7 +3,7 @@ require 'formula'
 class PhpSvn < Formula
   homepage 'http://pecl.php.net/package/svn'
   url 'http://pecl.php.net/get/svn-1.0.2.tgz'
-  sha1 '32c3da0844f04921482225d01e8eaf7acfcf0e94'
+  sha256 'ca0ea834e745a1aae65b456800bb5c5cfd7c4eceff281f7a8e317d30726e48cd'
   head 'http://pecl.php.net/get/svn'
 
   depends_on 'autoconf' => :build
